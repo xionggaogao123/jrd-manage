@@ -90,7 +90,11 @@ const routes = [
 			path: '/explain',
 			component: explain,
 			meta: ['说明', '说明'],
-		}]
+		},{
+            path: '/notice',
+            component: explain,
+            meta: ['君融贷债委会', '系统公告'],
+        }]
 	}
 ]
 

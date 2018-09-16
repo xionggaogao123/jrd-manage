@@ -6,37 +6,39 @@
 		  			<p>elm后台管理系统</p>
 		  		</div>
 		    	<el-form :model="loginForm" :rules="rules" ref="loginForm">
-					<el-form-item prop="username">
-						<el-input v-model="loginForm.username" placeholder="用户名"><span>dsfsf</span></el-input>
+					<el-form-item prop="name">
+						<el-input v-model="loginForm.name" placeholder="用户名"><span>dsfsf</span></el-input>
 					</el-form-item>
 					<el-form-item prop="password">
 						<el-input type="password" placeholder="密码" v-model="loginForm.password"></el-input>
 					</el-form-item>
 					<el-form-item>
-				    	<el-button type="primary" @click="submitForm('loginForm')" class="submit_btn">登陆</el-button>
+				    	<el-button type="primary" @click="login('loginForm')" class="submit_btn">登陆</el-button>
 				  	</el-form-item>
 				</el-form>
-				<p class="tip">温馨提示：</p>
+				<!--<p class="tip">温馨提示：</p>
 				<p class="tip">未登录过的新用户，自动注册</p>
-				<p class="tip">注册过的用户可凭账号密码登录</p>
+				<p class="tip">注册过的用户可凭账号密码登录</p>-->
+
 	  		</section>
 	  	</transition>
   	</div>
 </template>
 
 <script>
-	import {login, getAdminInfo} from '@/api/getData'
+    import {adminLogin} from '../api/getData';
+
 	import {mapActions, mapState} from 'vuex'
 
 	export default {
 	    data(){
 			return {
 				loginForm: {
-					username: '',
+                    name: '',
 					password: '',
 				},
 				rules: {
-					username: [
+                    name: [
 			            { required: true, message: '请输入用户名', trigger: 'blur' },
 			        ],
 					password: [
@@ -56,11 +58,31 @@
 			...mapState(['adminInfo']),
 		},
 		methods: {
-			...mapActions(['getAdminData']),
-			async submitForm(formName) {
+            login() {
+                const self = this;
+                let params = {
+                    name: this.loginForm.name,
+                    password: this.loginForm.password
+                };
+                adminLogin(params).then((res) => {
+                    if (res.data.result) {
+                        localStorage.setItem('ms_username', self.loginForm.name);
+                        self.$router.push('manage');
+                    } else {
+                        self.$message({
+                            message: res.data.message,
+                            type: 'error'
+                        })
+                    }
+                });
+            },
+			/*...mapActions(['getAdminData']),
+			async login(formName) {
 				this.$refs[formName].validate(async (valid) => {
 					if (valid) {
-						const res = await login({user_name: this.loginForm.username, password: this.loginForm.password})
+						const res = await login({name: this.loginForm.name, password: this.loginForm.password});
+						console.log(res);
+
 						if (res.status == 1) {
 							this.$message({
 		                        type: 'success',
@@ -82,9 +104,10 @@
 						return false;
 					}
 				});
-			},
+			},*/
 		},
-		watch: {
+
+		/*watch: {
 			adminInfo: function (newValue){
 				if (newValue.id) {
 					this.$message({
@@ -94,7 +117,7 @@
 					this.$router.push('manage')
 				}
 			}
-		}
+		}*/
 	}
 </script>
 

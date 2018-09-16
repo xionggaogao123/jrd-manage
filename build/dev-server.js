@@ -54,7 +54,8 @@ var context = config.dev.context
 
 switch(process.env.NODE_ENV){
     case 'local': var proxypath = 'http://localhost:8001'; break;
-    case 'online': var proxypath = 'http://cangdu.org:8001'; break;
+    /*case 'online': var proxypath = 'http://cangdu.org:8001'; break;*/
+    case 'online': var proxypath = 'http://localhost:9001'; break;
 }
 var options = {
     target: proxypath,
@@ -77,7 +78,7 @@ app.use(hotMiddleware)
 var staticPath = path.posix.join(config.dev.assetsPublicPath, config.dev.assetsSubDirectory)
 app.use(staticPath, express.static('./static'))
 
-var uri = 'http://localhost:' + port
+var uri = 'http://localhost:' + port;
 
 var _resolve
 var readyPromise = new Promise(resolve => {
