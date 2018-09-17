@@ -1,14 +1,20 @@
 import axios from 'axios'
 
-/**
- * 登陆
- */
+
 
 let host = 'http://localhost:9001';
 
+
+/**
+ * 登陆
+ */
 export const adminLogin =(params) => {
     return axios.post(`${host}/lender/login`, params);
 };
+
+
+
+
 
 
 

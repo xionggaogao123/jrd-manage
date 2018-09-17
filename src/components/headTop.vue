@@ -2,7 +2,7 @@
     <div class="header_container">
 
 		<el-breadcrumb separator="/">
-			<el-breadcrumb-item :to="{ path: '/notice' }">公告</el-breadcrumb-item>
+			<el-breadcrumb-item :to="{ path: '/notice' }">君融贷债委会</el-breadcrumb-item>
 			<el-breadcrumb-item v-for="(item, index) in $route.meta" key="index">{{item}}</el-breadcrumb-item>
 		</el-breadcrumb>
 		<el-dropdown @command="handleCommand" menu-align='start'>

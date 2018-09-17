@@ -4,10 +4,6 @@
 
         <div class="table_container">
             <el-table :data="tableData" highlight-current-row style="width: 100%">
-              <!--  <el-table-column property="registe_time" label="注册日期" width="220"></el-table-column>
-                <el-table-column property="username" label="用户姓名" width="220"></el-table-column>
-                <el-table-column property="city" label="注册地址"></el-table-column>-->
-
                 <el-table-column property="projectName" label="项目名称"></el-table-column>
                 <el-table-column property="projectNo" label="项目编号" ></el-table-column>
                 <el-table-column property="lendMoney" label="出借本金"></el-table-column>
@@ -45,23 +41,7 @@
     export default {
         data() {
             return {
-                tableData: [{
-                    registe_time: '2016-05-02',
-                    username: '王小虎',
-                    city: '上海市普陀区金沙江路 1518 弄'
-                }, {
-                    registe_time: '2016-05-04',
-                    username: '王小虎',
-                    city: '上海市普陀区金沙江路 1517 弄'
-                }, {
-                    registe_time: '2016-05-01',
-                    username: '王小虎',
-                    city: '上海市普陀区金沙江路 1519 弄'
-                }, {
-                    registe_time: '2016-05-03',
-                    username: '王小虎',
-                    city: '上海市普陀区金沙江路 1516 弄'
-                }],
+                tableData: [],
                 currentRow: null,
                 offset: 0,
                 limit: 20,
