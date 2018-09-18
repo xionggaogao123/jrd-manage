@@ -15,19 +15,19 @@
 
                     <el-submenu index="3">
                         <template slot="title"><i class="el-icon-plus"></i>借款人信息中心</template>
-                        <el-menu-item index="userList">我的借款人</el-menu-item>
-                        <el-menu-item index="shopList">全平台借款人列表</el-menu-item>
+                        <el-menu-item index="myBorrowerList">我的借款人</el-menu-item>
+                        <el-menu-item index="allBorrowerList">全平台借款人列表</el-menu-item>
                     </el-submenu>
 
                     <el-submenu index="4">
                         <template slot="title"><i class="el-icon-star-on"></i>资金链路</template>
-                        <el-menu-item index="userList">还款人还款资金去向</el-menu-item>
+                        <el-menu-item index="fundsLinkList">还款人还款资金去向</el-menu-item>
                     </el-submenu>
 
                     <el-submenu index="5">
                         <template slot="title"><i class="el-icon-edit"></i>分析中心</template>
-                        <el-menu-item index="userList">推测平台真标列表</el-menu-item>
-                        <el-menu-item index="userList">推测平台假标列表</el-menu-item>
+                        <el-menu-item index="trueProjectList">推测平台真标列表</el-menu-item>
+                        <el-menu-item index="falseProjectList">推测平台假标列表</el-menu-item>
                         <el-menu-item index="userList">担保公司列表</el-menu-item>
                     </el-submenu>
 
