@@ -1,6 +1,6 @@
 <template>
     <div class="fillcontain">
-        newMember
+        sendMessage
     </div>
 </template>
 

@@ -18,8 +18,8 @@ let baseImgPath;
     baseImgPath = 'http://cangdu.org:8001/img/';
 }*/
 
-baseUrl = 'http://localhost:9001';
-baseImgPath = 'http://localhost:9001';
+baseUrl = 'http://192.168.18.111:9001';
+baseImgPath = 'http://192.168.18.111:9001';
 
 export {
 	baseUrl,

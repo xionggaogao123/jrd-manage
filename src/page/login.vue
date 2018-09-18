@@ -3,9 +3,9 @@
 	  	<transition name="form-fade" mode="in-out">
 	  		<section class="form_contianer" v-show="showLogin">
 		  		<div class="manage_tip">
-		  			<p>elm后台管理系统</p>
+		  			<p>jrd 债委会</p>
 		  		</div>
-		    	<el-form :model="loginForm" :rules="rules" ref="loginForm">
+		    	<el-form :model="loginForm" :rules="loginRules" ref="loginForm" v-if="loginOrRegister">
 					<el-form-item prop="name">
 						<el-input v-model="loginForm.name" placeholder="用户名"><span>dsfsf</span></el-input>
 					</el-form-item>
@@ -15,11 +15,26 @@
 					<el-form-item>
 				    	<el-button type="primary" @click="login('loginForm')" class="submit_btn">登陆</el-button>
 				  	</el-form-item>
+				  	<p class="registered"><span @click="loginOrRegister = !loginOrRegister">去注册</span></p>
 				</el-form>
-				<!--<p class="tip">温馨提示：</p>
-				<p class="tip">未登录过的新用户，自动注册</p>
-				<p class="tip">注册过的用户可凭账号密码登录</p>-->
-
+				<el-form :model="registerForm" :rules="registerRules" ref="registerForm" v-if="!loginOrRegister">
+					<el-form-item prop="name">
+						<el-input v-model="registerForm.name" placeholder="用户名"><span>dsfsf</span></el-input>
+					</el-form-item>
+					<el-form-item prop="password">
+						<el-input type="password" placeholder="密码" v-model="registerForm.password"></el-input>
+					</el-form-item>
+					<el-form-item prop="password">
+						<el-input type="password" placeholder="手机号" v-model="registerForm.phone"></el-input>
+					</el-form-item>
+					<el-form-item prop="password">
+						<el-input type="password" placeholder="身份证号码" v-model="registerForm.idcard"></el-input>
+					</el-form-item>
+					<el-form-item>
+				    	<el-button type="primary" @click="register('registerForm')" class="submit_btn">注册</el-button>
+				  	</el-form-item>
+				  	<p class="registered"><span @click="loginOrRegister = !loginOrRegister">去登录</span></p>
+				</el-form>
 	  		</section>
 	  	</transition>
   	</div>
@@ -37,7 +52,14 @@
                     name: '',
 					password: '',
 				},
-				rules: {
+				registerForm:{
+					name:'',
+					password:'',
+					phone:'',
+					idcard:''
+				},
+
+				loginRules: {
                     name: [
 			            { required: true, message: '请输入用户名', trigger: 'blur' },
 			        ],
@@ -45,17 +67,32 @@
 						{ required: true, message: '请输入密码', trigger: 'blur' }
 					],
 				},
+				registerRules:{
+					name: [
+			            { required: true, message: '请输入用户名', trigger: 'blur' },
+			        ],
+					password: [
+						{ required: true, message: '请输入密码', trigger: 'blur' }
+					],
+					phone: [
+			            { required: true, message: '请输入手机号', trigger: 'blur' },
+			        ],
+					idcard: [
+						{ required: true, message: '请输入身份证号码', trigger: 'blur' }
+					],
+				},
 				showLogin: false,
+				loginOrRegister:true,
 			}
 		},
 		mounted(){
 			this.showLogin = true;
-			if (!this.adminInfo.id) {
+			/*if (!this.adminInfo.id) {
     			this.getAdminData()
-    		}
+    		}*/
 		},
 		computed: {
-			...mapState(['adminInfo']),
+			/*...mapState(['adminInfo']),*/
 		},
 		methods: {
             login() {
@@ -67,7 +104,7 @@
                 adminLogin(params).then((res) => {
                     if (res.data.result) {
                         localStorage.setItem('ms_username', self.loginForm.name);
-                        self.$router.push('manage');
+                        self.$router.push('notice');
                     } else {
                         self.$message({
                             message: res.data.message,
@@ -158,5 +195,9 @@
 	.form-fade-enter, .form-fade-leave-active {
 	  	transform: translate3d(0, -50px, 0);
 	  	opacity: 0;
+	}
+	.registered{
+		text-align: right;
+		color: #92C7FE;
 	}
 </style>
