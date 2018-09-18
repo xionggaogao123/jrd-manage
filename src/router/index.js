@@ -7,14 +7,9 @@ const login = r => require.ensure([], () => r(require('@/page/login')), 'login')
 const manage = r => require.ensure([], () => r(require('@/page/manage')), 'manage');
 const statistical = r => require.ensure([], () => r(require('@/page/statistical')), 'statistical');
 const allLendList = r => require.ensure([], () => r(require('@/page/allLendList')), 'allLendList');
-const allBorrower = r => require.ensure([], () => r(require('@/page/allBorrower')), 'allBorrower');
 const companyList = r => require.ensure([], () => r(require('@/page/companyList')), 'companyList');
 const evidenceList = r => require.ensure([], () => r(require('@/page/evidenceList')), 'evidenceList');
-const falseList = r => require.ensure([], () => r(require('@/page/falseList')), 'falseList');
-const moneyTo = r => require.ensure([], () => r(require('@/page/moneyTo')), 'moneyTo');
-const myBorrower = r => require.ensure([], () => r(require('@/page/myBorrower')), 'myBorrower');
 const notice = r => require.ensure([], () => r(require('@/page/notice')), 'notice');
-const trueList = r => require.ensure([], () => r(require('@/page/trueList')), 'trueList');
 const explain = r => require.ensure([], () => r(require('@/page/explain')), 'explain');
 
 
@@ -42,6 +37,11 @@ const routes = [{
             path: '/statistical',
             component: statistical,
             meta: ["数据统计"],
+        }
+        , {
+            path: '/companyList',
+            component: companyList,
+            meta: ["公司列表"],
         }, {
             path: '/myLendList',
             component: myLendList,

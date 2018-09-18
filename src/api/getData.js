@@ -12,11 +12,47 @@ export const adminLogin =(params) => {
     return axios.post(`${host}/lender/login`, params);
 };
 
+/**
+ * 注册
+ */
+export const adminRegister =(params) => {
+    return axios.post(`${host}/lender/register`, params);
+};
 
+/**
+ * 退出登录
+ */
+export const loginOut =(params) => {
+    return axios.get(`${host}/lender/login-out`, params);
+};
 
+/**
+ * 出借人 登记
+ */
+export const lendRecordCreate =(params) => {
+    return axios.post(`${host}/lend-record/create`, params);
+};
 
+/**
+ * 我的登记列表
+ */
+export const lendRecordPagingMyLend =(params) => {
+    return axios.get(`${host}/lend-record/paging-my-lend`, params);
+};
 
+/**
+ * 所有人的登记 列表
+ */
+export const lendRecordPagingAllLend =(params) => {
+    return axios.get(`${host}/lend-record/paging-all-lend`, params);
+};
 
+/**
+ * 我的借款人
+ */
+export const borrowerListMyBorrower =(params) => {
+    return axios.get(`${host}/lenborrower/list-my-borrower`, params);
+};
 
 
 /*export const login = data => fetch('/lender/login', data, 'POST');
