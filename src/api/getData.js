@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 
-let host = 'http://localhost:9001';
+let host = 'http://192.168.18.111:9001';
 
 
 /**
