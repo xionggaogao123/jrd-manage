@@ -5,37 +5,27 @@
             <el-input v-model="projectNo" placeholder="项目编号" size="small"></el-input>
             <el-input v-model="projectName" placeholder="项目名称" size="small"></el-input>
             <el-input v-model="borrowerPhone" placeholder="手机号码" size="small"></el-input>
-            <el-input v-model="borrowerName" placeholder="姓名" size="small"></el-input>
-            <el-input v-model="borrowerIdCard" placeholder="身份证号" size="small"></el-input>
-            <el-select v-model="borrowerStatus" placeholder="是否还款" size="small">
-                <el-option key="0" label="未还款" value="0"></el-option>
-                <el-option key="1" label="已还款" value="1"></el-option>
-            </el-select>
             <el-button type="primary" size="small" @click="search">搜索</el-button>
-            <el-button type="info" size="small" @click="dialogFormVisible = true">登记出错记录</el-button>
+            <el-button type="info" size="small" @click="dialogFormVisible1 = true">登记未还款记录</el-button>
         </div>
         <div class="table_container">
+            <div class="allMoney"><span>尚未收回本息：{{allMoney}}</span><span>本金：{{principal}}</span><span>利息：{{interest}}</span></div>
             <el-table :data="tableData" highlight-current-row style="width: 100%">
-                <el-table-column property="projectName" label="项目名称"></el-table-column>
+                <el-table-column type="index" width="50"></el-table-column>
+                <el-table-column property="borrowerName" label="借款人姓名"></el-table-column>
+                <el-table-column property="borrowerIdCard" label="身份证号"></el-table-column>
+                <el-table-column property="borrowerPhone" label="电话号码"></el-table-column>
+                <el-table-column property="projectName" label="借款合同号"></el-table-column>
                 <el-table-column property="projectNo" label="项目编号"></el-table-column>
-                <el-table-column property="lendMoney" label="出借本金"></el-table-column>
-                <el-table-column property="interestMoney" label="应收利息"></el-table-column>
-                <el-table-column property="lendDate" label="出借时间"></el-table-column>
+                <el-table-column property="projectName" label="项目名称"></el-table-column>
+                <el-table-column property="lendMoney" label="借款金额"></el-table-column>
+                <el-table-column property="guaranteeCompany" label="担保公司"></el-table-column>
+                <el-table-column property="lendDate" label="借款日期"></el-table-column>
                 <el-table-column property="lendDay" label="出借期限"></el-table-column>
                 <el-table-column property="lendDate" label="到期时间"></el-table-column>
-                <el-table-column property="borrowerName" label="借款人姓名"></el-table-column>
-                <el-table-column property="borrowerPhone" label="借款人电话号码"></el-table-column>
-                <el-table-column property="borrowerIdCard" label="借款人身份证号"></el-table-column>
-                <el-table-column property="guaranteeCompany" label="担保公司"></el-table-column>
-                <el-table-column property="status" label="是否已还款">
+                <el-table-column property="" label="操作">
                     <template slot-scope="scope">
-                        {{scope.row.status === 1?'已还款':'未还款'}}
-                    </template>
-                </el-table-column>
-                <el-table-column property="repayMoney" label="已还款金额"></el-table-column>
-                <el-table-column property="type" label="还款类型">
-                    <template slot-scope="scope">
-                        {{scope.row.type === 1?'系统还款':'主动还款'}}
+                        <el-button type="text" @click="entryEvidence(scope.$index,scope.row)">录入还款证据</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -44,7 +34,7 @@
                 </el-pagination>
             </div>
         </div>
-        <el-dialog title="登记出错记录" :visible.sync="dialogFormVisible" custom-class="dialogFormVisible">
+        <el-dialog title="登记未还款记录" :visible.sync="dialogFormVisible1" custom-class="dialogFormVisible" @open="openDialog1">
             <el-form :model="registrationForm">
                 <el-form-item label="项目名称" :label-width="formLabelWidth">
                     <el-input v-model="registrationForm.projectName" size="small"></el-input>
@@ -52,8 +42,14 @@
                 <el-form-item label="项目编号" :label-width="formLabelWidth">
                     <el-input v-model="registrationForm.projectNo" size="small"></el-input>
                 </el-form-item>
+                <el-form-item label="合同编号" :label-width="formLabelWidth">
+                    <el-input v-model="registrationForm.contractNo" size="small"></el-input>
+                </el-form-item>
                 <el-form-item label="出借本金" :label-width="formLabelWidth">
                     <el-input v-model="registrationForm.lendMoney" size="small"></el-input>
+                </el-form-item>
+                <el-form-item label="应收利息" :label-width="formLabelWidth">
+                    <el-input v-model="registrationForm.interestMoney" size="small"></el-input>
                 </el-form-item>
                 <el-form-item label="出借时间" :label-width="formLabelWidth">
                     <el-date-picker v-model="registrationForm.lendDate" type="date" placeholder="选择日期"></el-date-picker>
@@ -72,39 +68,45 @@
                 </el-form-item>
                 <el-form-item label="担保公司" :label-width="formLabelWidth">
                     <el-select v-model="registrationForm.guaranteeCompany" placeholder="担保公司" size="small">
-                        <el-option label="区域一" value="shanghai"></el-option>
-                        <el-option label="区域二" value="beijing"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="状态" :label-width="formLabelWidth">
-                    <el-select v-model="registrationForm.status" placeholder="状态" size="small">
-                        <el-option label="未还款" :value="0" :key="0"></el-option>
-                        <el-option label="已还款" :value="1" :key="1"></el-option>
-                    </el-select>
-                </el-form-item>
-                <el-form-item label="已还款金额" :label-width="formLabelWidth" v-if="registrationForm.status === 1">
-                    <el-input v-model="registrationForm.repayMoney" size="small"></el-input>
-                </el-form-item>
-                <el-form-item label="产生利息" :label-width="formLabelWidth" v-if="registrationForm.status === 1">
-                    <el-input v-model="registrationForm.interestMoney" size="small"></el-input>
-                </el-form-item>
-                <el-form-item label="还款类型" :label-width="formLabelWidth" v-if="registrationForm.status === 1">
-                    <el-select v-model="registrationForm.type" placeholder="还款类型" size="small">
-                        <el-option label="系统还款" value="1"></el-option>
-                        <el-option label="主动还款" value="2"></el-option>
+                        <el-option v-for="item in companyList" :label="item.name" :value="item.name"></el-option>
                     </el-select>
                 </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取 消</el-button>
+                <el-button @click="dialogFormVisible1 = false">取 消</el-button>
                 <el-button type="primary" @click="registration">确 定</el-button>
+            </div>
+        </el-dialog>
+        <el-dialog title="录入还款证据" :visible.sync="dialogFormVisible2" custom-class="dialogFormVisible" @close="closeDialog2">
+            <el-form :model="evidenceForm">
+                <el-form-item label="还入银行" :label-width="formLabelWidth">
+                    <el-input v-model="evidenceForm.bankName" size="small"></el-input>
+                </el-form-item>
+                <el-form-item label="银行账号" :label-width="formLabelWidth">
+                    <el-input v-model="evidenceForm.account" size="small"></el-input>
+                </el-form-item>
+                <el-form-item label="还款总额" :label-width="formLabelWidth">
+                    <el-input v-model="evidenceForm.repayMoney" size="small"></el-input>
+                </el-form-item>
+                <el-form-item label="相关佐证" :label-width="formLabelWidth">
+                    <el-upload action="" :before-upload="uploadImage" :multiple="false" :limit="1" list-type="picture-card" :file-list="fileList">
+                        <i class="el-icon-plus"></i>
+                    </el-upload>
+                </el-form-item>
+                <el-form-item label="备注" :label-width="formLabelWidth">
+                    <el-input v-model="evidenceForm.remark" size="small"></el-input>
+                </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+                <el-button @click="dialogFormVisible2 = false">取 消</el-button>
+                <el-button type="primary" @click="EntryEvidence">确 定</el-button>
             </div>
         </el-dialog>
     </div>
 </template>
 <script>
 import headTop from '../components/headTop'
-import { lendRecordPagingMyLend, lendRecordCreate } from '@/api/getData'
+import { lendRecordPagingMyLend, lendRecordCreate, toolUploadImage, borrowerRecordEvidence, companyList, lenderUserInfo } from '@/api/getData'
 
 export default {
     data() {
@@ -115,14 +117,13 @@ export default {
             projectNo: "",
             projectName: "",
             borrowerPhone: "",
-            borrowerName: "",
-            borrowerIdCard: "",
-            borrowerStatus: "",
-            dialogFormVisible:false,
+            dialogFormVisible1: false,
+            dialogFormVisible2: false,
             formLabelWidth: "90px",
             registrationForm: {
                 projectName: "",
                 projectNo: "",
+                contractNo:"",
                 lendMoney: 0,
                 lendDate: "",
                 lendDay: "",
@@ -130,11 +131,21 @@ export default {
                 borrowerPhone: "",
                 borrowerIdCard: "",
                 guaranteeCompany: "",
-                status: 0,
-                repayMoney: "",
-                type: "",
                 interestMoney: ""
-            }
+            },
+            evidenceForm: {
+                bankName: "",
+                account: "",
+                repayMoney: "",
+                remark: "",
+                evidences: []
+            },
+            borrowerId: "",
+            fileList: [],
+            companyList:[],
+            allMoney:"",
+            principal:"",
+            interest:""
         }
     },
     components: {
@@ -153,16 +164,22 @@ export default {
                     this.$message.error(res.data.message);
                 }
             });
+            lenderUserInfo().then((res) => {
+                if (res.data.result) {
+                    this.allMoney = res.data.result.totalWaitMoney;
+                    this.principal = res.data.result.totalLendMoney;
+                    this.interest = res.data.result.totalInterestMoney;
+                } else {
+                    this.$message.error(res.data.message);
+                }
+            });
         },
         handleCurrentChange(val) {
             let params = {
                 pageNo: val,
                 projectNo: this.projectNo,
                 projectName: this.projectName,
-                borrowerPhone: this.borrowerPhone,
-                borrowerName: this.borrowerName,
-                borrowerIdCard: this.borrowerIdCard,
-                status: this.borrowerStatus
+                borrowerPhone: this.borrowerPhone
             };
             lendRecordPagingMyLend({ params: params }).then((res) => {
                 if (res.data.result) {
@@ -177,10 +194,7 @@ export default {
             let params = {
                 projectNo: this.projectNo,
                 projectName: this.projectName,
-                borrowerPhone: this.borrowerPhone,
-                borrowerName: this.borrowerName,
-                borrowerIdCard: this.borrowerIdCard,
-                status: this.borrowerStatus
+                borrowerPhone: this.borrowerPhone
             }
             lendRecordPagingMyLend({ params: params }).then((res) => {
                 if (res.data.result) {
@@ -195,7 +209,7 @@ export default {
             lendRecordCreate(this.registrationForm).then((res) => {
                 if (res.data.result) {
                     this.$message.success(res.data.message);
-                    this.dialogFormVisible = false;
+                    this.dialogFormVisible1 = false;
                     this.initData();
                     this.currentPage = 1;
                 } else {
@@ -203,6 +217,55 @@ export default {
                 }
             });
         },
+        entryEvidence(index, row) {
+            this.dialogFormVisible2 = true;
+            this.borrowerId = row.id;
+        },
+        EntryEvidence() {
+            this.evidenceForm.id = this.borrowerId;
+            borrowerRecordEvidence(this.evidenceForm).then((res) => {
+                if (res.data.result) {
+                    this.$message.success(res.data.message);
+                    this.dialogFormVisible2 = false;
+                } else {
+                    this.$message.error(res.data.message);
+                }
+            });
+        },
+        closeDialog2() {
+            this.evidenceForm = {
+                bankName: "",
+                account: "",
+                repayMoney: "",
+                remark: "",
+                evidences: []
+            }
+        },
+        uploadImage(file) {
+            var formdata = new FormData();
+            formdata.append('file', file);
+            toolUploadImage(formdata).then(res => {
+                if (res.data.result) {
+                    this.evidenceForm.evidences.push(res.data.result);
+                    this.fileList.push({
+                        name: "",
+                        url: res.data.ressult
+                    })
+                }
+            }).catch(error => {
+
+            })
+
+        },
+        openDialog1() {
+            companyList({ params: { pageNo: 1 } }).then((res) => {
+                if (res.data.result) {
+                    this.companyList = res.data.result;
+                } else {
+                    this.$message.error(res.data.message);
+                }
+            });
+        }
     }
 }
 
@@ -218,17 +281,17 @@ export default {
     margin: 15px 0 0 20px;
 }
 
-.searchBox /deep/ .el-input,
-.searchBox /deep/ .el-select {
+.searchBox .el-input,
+.searchBox .el-select {
     width: 150px;
 }
 
-.fillcontain /deep/ .dialogFormVisible {
+.fillcontain .dialogFormVisible {
     width: 400px;
 }
 
-.dialogFormVisible /deep/ .el-input,
-.dialogFormVisible /deep/ .el-select {
+.dialogFormVisible .el-input,
+.dialogFormVisible .el-select {
     width: 260px;
 }
 
@@ -236,4 +299,16 @@ export default {
     margin-bottom: 2px;
 }
 
+.dialogFormVisible .el-upload-list--picture-card .el-upload-list__item,
+.dialogFormVisible .el-upload--picture-card {
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+}
+.allMoney{
+    margin-bottom: 10px;
+}
+.allMoney span{
+    margin-right: 20px;
+}
 </style>

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 
 
-let host = 'http://192.168.18.164:9001';
+let host = 'http://192.168.19.94:9001';
 
 
 /**
@@ -66,4 +66,32 @@ export const borrowerListAllBorrower =(params) => {
  */
 export const companyList =(params) => {
     return axios.get(`${host}/company/list`, params);
+};
+
+/**
+ * 上传 图片
+ */
+export const toolUploadImage =(params) => {
+    return axios.post(`${host}/tool/upload-image`, params);
+};
+
+/**
+ * 录人 我的 借款人还款 证据
+ */
+export const borrowerRecordEvidence =(params) => {
+    return axios.post(`${host}/borrower/record-evidence`, params);
+};
+
+/**
+ * 获取当前 登录用户的 信息
+ */
+export const lenderUserInfo =(params) => {
+    return axios.get(`${host}/lender/user-info`, params);
+};
+
+/**
+ * 获取当前 登录用户的 信息
+ */
+export const lenderListAllUserInfo =(params) => {
+    return axios.get(`${host}/lender/list-all-userInfo`, params);
 };

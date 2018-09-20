@@ -9,36 +9,20 @@
             <el-input v-model="borrowerPhone" placeholder="借款人手机号" size="small"></el-input>
             <el-input v-model="borrowerName" placeholder="借款人姓名" size="small"></el-input>
             <el-input v-model="borrowerIdCard" placeholder="身份证号码" size="small"></el-input>
-            <el-select v-model="borrowerStatus" placeholder="是否还款" size="small">
-                <el-option key="0" label="未还款" value="0"></el-option>
-                <el-option key="1" label="已还款" value="1"></el-option>
-            </el-select>
             <el-button type="primary" size="small" @click="search">搜索</el-button>
         </div>
         <div class="table_container">
             <el-table :data="tableData" highlight-current-row style="width: 100%">
                 <el-table-column property="lenderName" label="出借人"></el-table-column>
+                <el-table-column property="lenderName" label="平台名称"></el-table-column>
                 <el-table-column property="lenderPhone" label="出借人电话"></el-table-column>
-                <el-table-column property="projectName" label="项目名称"></el-table-column>
-                <el-table-column property="projectNo" label="项目编号"></el-table-column>
+                <el-table-column property="lenderPhone" label="出借人身份证号"></el-table-column>
+                <el-table-column property="lenderPhone" label="尚未收回本息（元）"></el-table-column>
                 <el-table-column property="lendMoney" label="出借本金"></el-table-column>
                 <el-table-column property="interestMoney" label="应收利息"></el-table-column>
-                <el-table-column property="lendDate" label="出借时间"></el-table-column>
-                <el-table-column property="lendDay" label="出借期限"></el-table-column>
-                <el-table-column property="lendDate" label="到期时间"></el-table-column>
-                <el-table-column property="borrowerName" label="借款人姓名"></el-table-column>
-                <el-table-column property="borrowerPhone" label="借款人电话号码"></el-table-column>
-                <el-table-column property="borrowerIdCard" label="借款人身份证号"></el-table-column>
-                <el-table-column property="guaranteeCompany" label="担保公司"></el-table-column>
-                <el-table-column property="status" label="是否已还款">
+                <el-table-column property="" label="操作">
                     <template slot-scope="scope">
-                        {{scope.row.status === 1?'已还款':'未还款'}}
-                    </template>
-                </el-table-column>
-                <el-table-column property="repayMoney" label="已还款金额"></el-table-column>
-                <el-table-column property="type" label="还款类型">
-                    <template slot-scope="scope">
-                        {{scope.row.type === 1?'系统还款':'主动还款'}}
+                        <el-button type="text" @click="checkRecord(scope.$index,scope.row)">出借記錄</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -47,11 +31,25 @@
                 </el-pagination>
             </div>
         </div>
+        <el-dialog title="出借記錄" :visible.sync="dialogFormVisible" custom-class="dialogFormVisible3" @close="closeDialog">
+            <el-table :data="tableData" highlight-current-row style="width: 100%">
+                <el-table-column type="index" width="50"></el-table-column>
+                <el-table-column property="borrowerName" label="借款人姓名"></el-table-column>
+                <el-table-column property="borrowerIdCard" label="身份证号"></el-table-column>
+                <el-table-column property="borrowerPhone" label="电话号码"></el-table-column>
+                <el-table-column property="projectName" label="借款合同号"></el-table-column>
+                <el-table-column property="projectNo" label="借款金额"></el-table-column>
+                <el-table-column property="guaranteeCompany" label="担保公司"></el-table-column>
+                <el-table-column property="lendDate" label="借款日期"></el-table-column>
+                <el-table-column property="lendDay" label="出借期限"></el-table-column>
+                <el-table-column property="lendDate" label="到期时间"></el-table-column>
+            </el-table>
+        </el-dialog>
     </div>
 </template>
 <script>
 import headTop from '../components/headTop'
-import { lendRecordPagingAllLend } from '@/api/getData'
+import { lendRecordPagingAllLend,lenderListAllUserInfo } from '@/api/getData'
 
 export default {
     data() {
@@ -67,7 +65,7 @@ export default {
             borrowerPhone: "",
             borrowerName: "",
             borrowerIdCard: "",
-            borrowerStatus: ""
+            dialogFormVisible:false,
         }
     },
     components: {
@@ -78,7 +76,7 @@ export default {
     },
     methods: {
         initData() {
-            lendRecordPagingAllLend({ params: { pageNo: 1 } }).then((res) => {
+            lenderListAllUserInfo({ params: { pageNo: 1 } }).then((res) => {
                 if (res.data.result) {
                     this.tableData = res.data.result.data;
                     this.totalCount = res.data.result.total;
@@ -96,10 +94,9 @@ export default {
                 projectName: this.projectName,
                 borrowerPhone: this.borrowerPhone,
                 borrowerName: this.borrowerName,
-                borrowerIdCard: this.borrowerIdCard,
-                status: this.borrowerStatus
+                borrowerIdCard: this.borrowerIdCard
             };
-            lendRecordPagingAllLend({ params: params }).then((res) => {
+            lenderListAllUserInfo({ params: params }).then((res) => {
                 if (res.data.result) {
                     this.tableData = res.data.result.data;
                     this.totalCount = res.data.result.total;
@@ -117,8 +114,7 @@ export default {
                 projectName: this.projectName,
                 borrowerPhone: this.borrowerPhone,
                 borrowerName: this.borrowerName,
-                borrowerIdCard: this.borrowerIdCard,
-                status: this.borrowerStatus
+                borrowerIdCard: this.borrowerIdCard
             }
             lendRecordPagingAllLend({ params: params }).then((res) => {
                 if (res.data.result) {
@@ -128,6 +124,12 @@ export default {
                     this.$message.error(res.data.message);
                 }
             });
+        },
+        checkRecord(index,row) {
+            this.dialogFormVisible = true;
+        },
+        closeDialog(){
+
         },
     },
 }
@@ -144,9 +146,11 @@ export default {
     margin: 15px 0 0 20px;
 }
 
-.searchBox /deep/ .el-input,
-.searchBox /deep/ .el-select {
+.searchBox .el-input,
+.searchBox .el-select {
     width: 150px;
 }
-
+.fillcontain .dialogFormVisible3 {
+    width: 1000px;
+}
 </style>
