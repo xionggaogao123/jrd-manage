@@ -2,8 +2,10 @@ import axios from 'axios'
 
 
 
-let host = 'http://192.168.18.164:9001';
+//let host = 'http://192.168.18.164:9001';
 
+
+let host = 'http://localhost:9001';
 
 /**
  * 登陆

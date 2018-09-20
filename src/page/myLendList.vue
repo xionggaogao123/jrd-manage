@@ -12,7 +12,7 @@
                 <el-option key="1" label="已还款" value="1"></el-option>
             </el-select>
             <el-button type="primary" size="small" @click="search">搜索</el-button>
-            <el-button type="info" size="small" @click="dialogFormVisible = true">登记出错记录</el-button>
+            <el-button type="info" size="small" @click="dialogFormVisible = true">登记出借记录</el-button>
         </div>
         <div class="table_container">
             <el-table :data="tableData" highlight-current-row style="width: 100%">
