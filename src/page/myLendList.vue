@@ -6,11 +6,7 @@
             <el-input v-model="projectName" placeholder="项目名称" size="small"></el-input>
             <el-input v-model="borrowerPhone" placeholder="手机号码" size="small"></el-input>
             <el-button type="primary" size="small" @click="search">搜索</el-button>
-<<<<<<< HEAD
-            <el-button type="info" size="small" @click="dialogFormVisible = true">登记出借记录</el-button>
-=======
             <el-button type="info" size="small" @click="dialogFormVisible1 = true">登记未还款记录</el-button>
->>>>>>> 3e4409b1a70080796b876fccbb7264f0a9470c1a
         </div>
         <div class="table_container">
             <div class="allMoney"><span>尚未收回本息：{{allMoney}}</span><span>本金：{{principal}}</span><span>利息：{{interest}}</span></div>
