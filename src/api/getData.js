@@ -6,7 +6,7 @@ axios.defaults.withCredentials=true;
 //let host = 'http://192.168.19.94:9001';
 
 
-let host = 'http://localhost:9001';
+let host = 'http://192.168.18.46:9001';
 
 /**
  * 登陆
