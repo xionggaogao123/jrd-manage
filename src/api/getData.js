@@ -1,12 +1,12 @@
 import axios from 'axios'
-axios.defaults.withCredentials=true;
+// axios.defaults.withCredentials=true;
 
 
 //let host = 'http://192.168.18.164:9001';
 //let host = 'http://192.168.19.94:9001';
 
 
-let host = 'http://192.168.18.46:9001';
+let host = "http://192.168.18.46:9001";
 
 /**
  * 登陆
@@ -41,13 +41,6 @@ export const lendRecordCreate =(params) => {
  */
 export const lendRecordPagingMyLend =(params) => {
     return axios.get(`${host}/lend-record/paging-my-lend`, params);
-};
-
-/**
- * 所有人的登记 列表
- */
-export const lendRecordPagingAllLend =(params) => {
-    return axios.get(`${host}/lend-record/paging-all-lend`, params);
 };
 
 /**

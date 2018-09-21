@@ -18,11 +18,11 @@
                 <el-table-column property="projectName" label="借款合同号"></el-table-column>
                 <el-table-column property="projectNo" label="项目编号"></el-table-column>
                 <el-table-column property="projectName" label="项目名称"></el-table-column>
-                <el-table-column property="lendMoney" label="借款金额"></el-table-column>
+                <el-table-column property="lendMoney" label="借款金额(元)"></el-table-column>
                 <el-table-column property="guaranteeCompany" label="担保公司"></el-table-column>
                 <el-table-column property="lendDate" label="借款日期"></el-table-column>
-                <el-table-column property="lendDay" label="出借期限"></el-table-column>
-                <el-table-column property="lendDate" label="到期时间"></el-table-column>
+                <el-table-column property="lendDay" label="出借期限(月)"></el-table-column>
+                <el-table-column property="expireDate" label="到期时间"></el-table-column>
                 <el-table-column property="" label="操作">
                     <template slot-scope="scope">
                         <el-button type="text" @click="entryEvidence(scope.$index,scope.row)">录入还款证据</el-button>
@@ -124,7 +124,7 @@ export default {
                 projectName: "",
                 projectNo: "",
                 contractNo:"",
-                lendMoney: 0,
+                lendMoney: "",
                 lendDate: "",
                 lendDay: "",
                 borrowerName: "",
@@ -160,6 +160,11 @@ export default {
                 if (res.data.result) {
                     this.tableData = res.data.result.data;
                     this.totalCount = res.data.result.total;
+                    for (let i = 0; i < this.tableData.length; i++) {
+                        this.tableData[i].lendMoney = this.tableData[i].projectNo / 100;
+                        this.tableData[i].lendDate = this.fmtDate(this.tableData[i].lendDate);
+                        this.tableData[i].expireDate = this.fmtDate(this.tableData[i].lendDate);
+                    }
                 } else {
                     this.$message.error(res.data.message);
                 }
@@ -185,6 +190,11 @@ export default {
                 if (res.data.result) {
                     this.tableData = res.data.result.data;
                     this.totalCount = res.data.result.total;
+                    for (let i = 0; i < this.tableData.length; i++) {
+                        this.tableData[i].lendMoney = this.tableData[i].projectNo / 100;
+                        this.tableData[i].lendDate = this.fmtDate(this.tableData[i].lendDate);
+                        this.tableData[i].expireDate = this.fmtDate(this.tableData[i].lendDate);
+                    }
                 } else {
                     this.$message.error(res.data.message);
                 }
@@ -200,13 +210,20 @@ export default {
                 if (res.data.result) {
                     this.tableData = res.data.result.data;
                     this.totalCount = res.data.result.total;
+                    for (let i = 0; i < this.tableData.length; i++) {
+                        this.tableData[i].lendMoney = this.tableData[i].projectNo / 100;
+                        this.tableData[i].lendDate = this.fmtDate(this.tableData[i].lendDate);
+                        this.tableData[i].expireDate = this.fmtDate(this.tableData[i].lendDate);
+                    }
                 } else {
                     this.$message.error(res.data.message);
                 }
             });
         },
         registration() {
-            lendRecordCreate(this.registrationForm).then((res) => {
+            // this.registrationForm.lendMoney = this.registrationForm.lendMoney * 100;
+            // this.registrationForm.interestMoney = this.registrationForm.interestMoney * 100;
+            lendRecordCreate({text:"texd"}).then((res) => {
                 if (res.data.result) {
                     this.$message.success(res.data.message);
                     this.dialogFormVisible1 = false;
@@ -265,7 +282,14 @@ export default {
                     this.$message.error(res.data.message);
                 }
             });
-        }
+        },
+        fmtDate(obj) {
+            var date = new Date(obj);
+            var y = 1900 + date.getYear();
+            var m = "0" + (date.getMonth() + 1);
+            var d = "0" + date.getDate();
+            return y + "-" + m.substring(m.length - 2, m.length) + "-" + d.substring(d.length - 2, d.length);
+        },
     }
 }
 

@@ -25,10 +25,10 @@
                         <el-input type="password" placeholder="密码" v-model="registerForm.password"></el-input>
                     </el-form-item>
                     <el-form-item prop="password">
-                        <el-input type="password" placeholder="手机号" v-model="registerForm.phone"></el-input>
+                        <el-input placeholder="手机号" v-model="registerForm.phone"></el-input>
                     </el-form-item>
                     <el-form-item prop="password">
-                        <el-input type="password" placeholder="身份证号码" v-model="registerForm.idcard"></el-input>
+                        <el-input placeholder="身份证号码" v-model="registerForm.idcard"></el-input>
                     </el-form-item>
                     <el-form-item>
                         <el-button type="primary" @click="register('registerForm')" class="submit_btn">注册</el-button>
