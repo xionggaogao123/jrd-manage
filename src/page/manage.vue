@@ -10,11 +10,11 @@
                         <el-menu-item index="myLendList">我的出借记录</el-menu-item>
                         <el-menu-item index="allLendList">全平台出借记录</el-menu-item>
                     </el-submenu>
-                    <el-submenu index="3">
+                    <!-- <el-submenu index="3">
                         <template slot="title"><i class="el-icon-plus"></i>借款人信息中心</template>
                         <el-menu-item index="myBorrowerList">我的借款人</el-menu-item>
                         <el-menu-item index="allBorrowerList">全平台借款人列表</el-menu-item>
-                    </el-submenu>
+                    </el-submenu> -->
                     <el-submenu index="4">
                         <template slot="title"><i class="el-icon-star-on"></i>资金链路</template>
                         <el-menu-item index="fundsLinkList">还款人还款资金去向</el-menu-item>
@@ -24,6 +24,7 @@
                         <el-menu-item index="trueProjectList">推测平台真标列表</el-menu-item>
                         <el-menu-item index="falseProjectList">推测平台假标列表</el-menu-item>
                         <el-menu-item index="companyList">担保公司列表</el-menu-item>
+                        <el-menu-item index="queryPhone">查询手机号</el-menu-item>
                     </el-submenu>
                     <el-submenu index="6">
                         <template slot="title"><i class="el-icon-setting"></i>证据中心</template>

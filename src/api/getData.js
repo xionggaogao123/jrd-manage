@@ -1,5 +1,5 @@
 import axios from 'axios'
-// axios.defaults.withCredentials=true;
+axios.defaults.withCredentials=true;
 
 
 //let host = 'http://192.168.18.164:9001';
@@ -90,4 +90,25 @@ export const lenderUserInfo =(params) => {
  */
 export const lenderListAllUserInfo =(params) => {
     return axios.get(`${host}/lender/list-all-userInfo`, params);
+};
+
+/**
+ * 获取当前 登录用户的 信息
+ */
+export const  toolSurmisePhone =(params) => {
+    return axios.get(`${host}/tool/surmise-phone`, params);
+};
+
+/**
+ * 删除 我的 出借
+ */
+export const  lendRecordDeleteMyLend =(params) => {
+    return axios.get(`${host}/lend-record/delete-my-lend`, params);
+};
+
+/**
+ * 更新 我的 出借
+ */
+export const  lendRecordUpdateMyLend =(params) => {
+    return axios.post(`${host}/lend-record/update-my-lend`, params);
 };

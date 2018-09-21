@@ -212,5 +212,7 @@ export default {
 .fillcontain .dialogFormVisible3 {
     width: 1000px;
 }
-
+.el-table th,.el-table td{
+    text-align: center;
+}
 </style>

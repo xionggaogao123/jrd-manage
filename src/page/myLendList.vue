@@ -6,7 +6,7 @@
             <el-input v-model="projectName" placeholder="项目名称" size="small"></el-input>
             <el-input v-model="borrowerPhone" placeholder="手机号码" size="small"></el-input>
             <el-button type="primary" size="small" @click="search">搜索</el-button>
-            <el-button type="info" size="small" @click="dialogFormVisible1 = true">登记未还款记录</el-button>
+            <el-button type="info" size="small" @click="openRegistration">登记未还款记录</el-button>
         </div>
         <div class="table_container">
             <div class="allMoney"><span>尚未收回本息：{{allMoney}}</span><span>本金：{{principal}}</span><span>利息：{{interest}}</span></div>
@@ -23,9 +23,12 @@
                 <el-table-column property="lendDate" label="借款日期"></el-table-column>
                 <el-table-column property="lendDay" label="出借期限(月)"></el-table-column>
                 <el-table-column property="expireDate" label="到期时间"></el-table-column>
-                <el-table-column property="" label="操作">
+                <el-table-column property="" label="操作" width="250">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="entryEvidence(scope.$index,scope.row)">录入还款证据</el-button>
+                        <el-button v-if="scope.row.isRecord" type="text" @click="entryEvidence(scope.$index,scope.row)">编辑还款证据</el-button>
+                        <el-button v-else type="text" @click="entryEvidence(scope.$index,scope.row)">录入还款证据</el-button>
+                        <el-button type="text" @click="editorList(scope.$index,scope.row)">编辑</el-button>
+                        <el-button type="text" @click="deleteList(scope.$index,scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -34,7 +37,7 @@
                 </el-pagination>
             </div>
         </div>
-        <el-dialog title="登记未还款记录" :visible.sync="dialogFormVisible1" custom-class="dialogFormVisible" @open="openDialog1">
+        <el-dialog title="登记未还款记录" :visible.sync="dialogFormVisible1" custom-class="dialogFormVisible" @open="openDialog1" @close="closeDialog1">
             <el-form :model="registrationForm">
                 <el-form-item label="项目名称" :label-width="formLabelWidth">
                     <el-input v-model="registrationForm.projectName" size="small"></el-input>
@@ -83,7 +86,7 @@
                     <el-input v-model="evidenceForm.bankName" size="small"></el-input>
                 </el-form-item>
                 <el-form-item label="银行账号" :label-width="formLabelWidth">
-                    <el-input v-model="evidenceForm.account" size="small"></el-input>
+                    <el-input v-model="evidenceForm.bankAccount" size="small"></el-input>
                 </el-form-item>
                 <el-form-item label="还款总额" :label-width="formLabelWidth">
                     <el-input v-model="evidenceForm.repayMoney" size="small"></el-input>
@@ -106,7 +109,7 @@
 </template>
 <script>
 import headTop from '../components/headTop'
-import { lendRecordPagingMyLend, lendRecordCreate, toolUploadImage, borrowerRecordEvidence, companyList, lenderUserInfo } from '@/api/getData'
+import { lendRecordPagingMyLend, lendRecordCreate, toolUploadImage, borrowerRecordEvidence, companyList, lenderUserInfo, lendRecordDeleteMyLend, lendRecordUpdateMyLend } from '@/api/getData'
 
 export default {
     data() {
@@ -123,7 +126,7 @@ export default {
             registrationForm: {
                 projectName: "",
                 projectNo: "",
-                contractNo:"",
+                contractNo: "",
                 lendMoney: "",
                 lendDate: "",
                 lendDay: "",
@@ -135,17 +138,18 @@ export default {
             },
             evidenceForm: {
                 bankName: "",
-                account: "",
+                bankAccount: "",
                 repayMoney: "",
                 remark: "",
                 evidences: []
             },
             borrowerId: "",
             fileList: [],
-            companyList:[],
-            allMoney:"",
-            principal:"",
-            interest:""
+            companyList: [],
+            allMoney: "",
+            principal: "",
+            interest: "",
+            isEditor: false,
         }
     },
     components: {
@@ -221,18 +225,33 @@ export default {
             });
         },
         registration() {
-            // this.registrationForm.lendMoney = this.registrationForm.lendMoney * 100;
-            // this.registrationForm.interestMoney = this.registrationForm.interestMoney * 100;
-            lendRecordCreate({text:"texd"}).then((res) => {
-                if (res.data.result) {
-                    this.$message.success(res.data.message);
-                    this.dialogFormVisible1 = false;
-                    this.initData();
-                    this.currentPage = 1;
-                } else {
-                    this.$message.error(res.data.message);
-                }
-            });
+            if (this.isEditor) { //编辑
+                this.registrationForm.lendMoney = this.registrationForm.lendMoney * 100;
+                this.registrationForm.interestMoney = this.registrationForm.interestMoney * 100;
+                lendRecordUpdateMyLend(this.registrationForm).then((res) => {
+                    if (res.data.result) {
+                        this.$message.success(res.data.message);
+                        this.dialogFormVisible1 = false;
+                        this.initData();
+                        this.currentPage = 1;
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                });
+            } else { //新增
+                this.registrationForm.lendMoney = this.registrationForm.lendMoney * 100;
+                this.registrationForm.interestMoney = this.registrationForm.interestMoney * 100;
+                lendRecordCreate(this.registrationForm).then((res) => {
+                    if (res.data.result) {
+                        this.$message.success(res.data.message);
+                        this.dialogFormVisible1 = false;
+                        this.initData();
+                        this.currentPage = 1;
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                });
+            }
         },
         entryEvidence(index, row) {
             this.dialogFormVisible2 = true;
@@ -244,6 +263,7 @@ export default {
                 if (res.data.result) {
                     this.$message.success(res.data.message);
                     this.dialogFormVisible2 = false;
+                    this.initData();
                 } else {
                     this.$message.error(res.data.message);
                 }
@@ -283,6 +303,21 @@ export default {
                 }
             });
         },
+        closeDialog1() {
+            this.registrationForm = {
+                projectName: "",
+                projectNo: "",
+                contractNo: "",
+                lendMoney: "",
+                lendDate: "",
+                lendDay: "",
+                borrowerName: "",
+                borrowerPhone: "",
+                borrowerIdCard: "",
+                guaranteeCompany: "",
+                interestMoney: ""
+            }
+        },
         fmtDate(obj) {
             var date = new Date(obj);
             var y = 1900 + date.getYear();
@@ -290,6 +325,38 @@ export default {
             var d = "0" + date.getDate();
             return y + "-" + m.substring(m.length - 2, m.length) + "-" + d.substring(d.length - 2, d.length);
         },
+        editorList(index, row) {
+            this.dialogFormVisible1 = true;
+            this.isEditor = true;
+            this.registrationForm = row;
+        },
+        openRegistration() {
+            this.dialogFormVisible1 = true;
+            this.isEditor = false;
+
+        },
+        deleteList(index, row) {
+            this.$confirm('此操作将永久删除, 是否继续?', '注意', {
+                confirmButtonText: '确定',
+                cancelButtonText: '取消',
+                type: 'warning'
+            }).then(() => {
+                lendRecordDeleteMyLend({ params: { id: row.id } }).then((res) => {
+                    if (res.data.result) {
+                        this.$message.success(res.data.message);
+                        this.initData();
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                });
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消删除'
+                });
+            });
+
+        }
     }
 }
 
@@ -329,10 +396,18 @@ export default {
     height: 80px;
     line-height: 80px;
 }
-.allMoney{
+
+.allMoney {
     margin-bottom: 10px;
 }
-.allMoney span{
+
+.allMoney span {
     margin-right: 20px;
 }
+
+.el-table th,
+.el-table td {
+    text-align: center;
+}
+
 </style>

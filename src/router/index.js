@@ -11,6 +11,7 @@ const companyList = r => require.ensure([], () => r(require('@/page/companyList'
 const evidenceList = r => require.ensure([], () => r(require('@/page/evidenceList')), 'evidenceList');
 const notice = r => require.ensure([], () => r(require('@/page/notice')), 'notice');
 const explain = r => require.ensure([], () => r(require('@/page/explain')), 'explain');
+const queryPhone = r => require.ensure([], () => r(require('@/page/queryPhone')), 'explain');
 
 
 const myLendList = r => require.ensure([], () => r(require('@/page/myLendList')), 'myLendList');
@@ -42,6 +43,10 @@ const routes = [{
             path: '/companyList',
             component: companyList,
             meta: ["公司列表"],
+        },{
+            path: '/queryPhone',
+            component: queryPhone,
+            meta: ["查询手机号"],
         }, {
             path: '/myLendList',
             component: myLendList,
