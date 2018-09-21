@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+axios.defaults.withCredentials=true;
 
 
 let host = 'http://192.168.19.94:9001';
