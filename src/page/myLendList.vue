@@ -25,7 +25,7 @@
                 <el-table-column property="expireDate" label="到期时间"></el-table-column>
                 <el-table-column property="" label="操作" width="250">
                     <template slot-scope="scope">
-                        <el-button v-if="scope.row.isRecord" type="text" @click="entryEvidence(scope.$index,scope.row)">编辑还款证据</el-button>
+                        <el-button v-if="scope.row.isRecord" type="text" @click="editorEvidence(scope.$index,scope.row)">编辑还款证据</el-button>
                         <el-button v-else type="text" @click="entryEvidence(scope.$index,scope.row)">录入还款证据</el-button>
                         <el-button type="text" @click="editorList(scope.$index,scope.row)">编辑</el-button>
                         <el-button type="text" @click="deleteList(scope.$index,scope.row)">删除</el-button>
@@ -109,7 +109,7 @@
 </template>
 <script>
 import headTop from '../components/headTop'
-import { lendRecordPagingMyLend, lendRecordCreate, toolUploadImage, borrowerRecordEvidence, companyList, lenderUserInfo, lendRecordDeleteMyLend, lendRecordUpdateMyLend } from '@/api/getData'
+import { lendRecordPagingMyLend, lendRecordCreate, toolUploadImage, borrowerRecordEvidence, companyList, lenderUserInfo, lendRecordDeleteMyLend, lendRecordUpdateMyLend, borrowerFindEvidence, borrowerUpdateEvidence } from '@/api/getData'
 
 export default {
     data() {
@@ -150,6 +150,7 @@ export default {
             principal: "",
             interest: "",
             isEditor: false,
+            isEvidence: true,
         }
     },
     components: {
@@ -256,18 +257,47 @@ export default {
         entryEvidence(index, row) {
             this.dialogFormVisible2 = true;
             this.borrowerId = row.id;
+            this.isEvidence = true;
         },
-        EntryEvidence() {
-            this.evidenceForm.id = this.borrowerId;
-            borrowerRecordEvidence(this.evidenceForm).then((res) => {
+        editorEvidence(index, row) {
+            this.dialogFormVisible2 = true;
+            this.isEvidence = false;
+            borrowerFindEvidence({ params: { id: row.id } }).then((res) => {
                 if (res.data.result) {
-                    this.$message.success(res.data.message);
-                    this.dialogFormVisible2 = false;
-                    this.initData();
+                    this.evidenceForm.bankName = res.data.result.bankName;
+                    this.evidenceForm.bankAccount = res.data.result.bankAccount;
+                    this.evidenceForm.repayMoney = res.data.result.repayMoney;
+                    this.evidenceForm.remark = res.data.result.remark;
+                    this.evidenceForm.evidences = res.data.result.evidences;
+                    this.evidenceForm.id = res.data.result.lendRecordId;
                 } else {
                     this.$message.error(res.data.message);
                 }
             });
+        },
+        EntryEvidence() {
+            if (this.isEvidence) {
+                this.evidenceForm.id = this.borrowerId;
+                borrowerRecordEvidence(this.evidenceForm).then((res) => {
+                    if (res.data.result) {
+                        this.$message.success(res.data.message);
+                        this.dialogFormVisible2 = false;
+                        // this.initData();
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                });
+            } else {
+                borrowerUpdateEvidence(this.evidenceForm).then((res) => {
+                    if (res.data.result) {
+                        this.$message.success(res.data.message);
+                        this.dialogFormVisible2 = false;
+                        // this.initData();
+                    } else {
+                        this.$message.error(res.data.message);
+                    }
+                });
+            }
         },
         closeDialog2() {
             this.evidenceForm = {

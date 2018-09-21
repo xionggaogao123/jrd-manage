@@ -112,3 +112,17 @@ export const  lendRecordDeleteMyLend =(params) => {
 export const  lendRecordUpdateMyLend =(params) => {
     return axios.post(`${host}/lend-record/update-my-lend`, params);
 };
+
+/**
+ * 查看录入证据
+ */
+export const  borrowerFindEvidence =(params) => {
+    return axios.get(`${host}/borrower/find-evidence`, params);
+};
+
+/**
+ * 查看录入证据
+ */
+export const  borrowerUpdateEvidence =(params) => {
+    return axios.post(`${host}/borrower/update-evidence`, params);
+};
