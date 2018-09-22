@@ -9,7 +9,7 @@
             <el-button type="info" size="small" @click="openRegistration">登记未还款记录</el-button>
         </div>
         <div class="table_container">
-            <div class="allMoney"><span>尚未收回本息：{{allMoney}}</span><span>本金：{{principal}}</span><span>利息：{{interest}}</span></div>
+            <div class="allMoney"><span>尚未收回本息：{{allMoney/100}} 元</span><span>本金：{{principal/100}} 元</span><span>利息：{{interest/100}} 元</span></div>
             <el-table :data="tableData" highlight-current-row style="width: 100%">
                 <el-table-column type="index" width="50"></el-table-column>
                 <el-table-column property="borrowerName" label="借款人姓名"></el-table-column>
@@ -137,6 +137,7 @@ export default {
                 interestMoney: ""
             },
             evidenceForm: {
+                lendRecordId: "",
                 bankName: "",
                 bankAccount: "",
                 repayMoney: "",
@@ -166,7 +167,7 @@ export default {
                     this.tableData = res.data.result.data;
                     this.totalCount = res.data.result.total;
                     for (let i = 0; i < this.tableData.length; i++) {
-                        this.tableData[i].lendMoney = this.tableData[i].projectNo / 100;
+                        this.tableData[i].lendMoney = this.tableData[i].lendMoney / 100;
                         this.tableData[i].lendDate = this.fmtDate(this.tableData[i].lendDate);
                         this.tableData[i].expireDate = this.fmtDate(this.tableData[i].lendDate);
                     }
@@ -196,7 +197,7 @@ export default {
                     this.tableData = res.data.result.data;
                     this.totalCount = res.data.result.total;
                     for (let i = 0; i < this.tableData.length; i++) {
-                        this.tableData[i].lendMoney = this.tableData[i].projectNo / 100;
+                        this.tableData[i].lendMoney = this.tableData[i].lendMoney / 100;
                         this.tableData[i].lendDate = this.fmtDate(this.tableData[i].lendDate);
                         this.tableData[i].expireDate = this.fmtDate(this.tableData[i].lendDate);
                     }
@@ -210,13 +211,13 @@ export default {
                 projectNo: this.projectNo,
                 projectName: this.projectName,
                 borrowerPhone: this.borrowerPhone
-            }
+            };
             lendRecordPagingMyLend({ params: params }).then((res) => {
                 if (res.data.result) {
                     this.tableData = res.data.result.data;
                     this.totalCount = res.data.result.total;
                     for (let i = 0; i < this.tableData.length; i++) {
-                        this.tableData[i].lendMoney = this.tableData[i].projectNo / 100;
+                        this.tableData[i].lendMoney = this.tableData[i].lendMoney / 100;
                         this.tableData[i].lendDate = this.fmtDate(this.tableData[i].lendDate);
                         this.tableData[i].expireDate = this.fmtDate(this.tableData[i].lendDate);
                     }
@@ -316,7 +317,7 @@ export default {
                     this.evidenceForm.evidences.push(res.data.result);
                     this.fileList.push({
                         name: "",
-                        url: res.data.ressult
+                        url: res.data.result
                     })
                 }
             }).catch(error => {
