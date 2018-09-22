@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="1b867b43-a90d-4abb-8a95-26124ee8e8b1" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/page/allLendList.vue" afterPath="$PROJECT_DIR$/src/page/allLendList.vue" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/page/myLendList.vue" afterPath="$PROJECT_DIR$/src/page/myLendList.vue" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -54,8 +54,8 @@
       <file leaf-file-name="myLendList.vue" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/page/myLendList.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="502">
-              <caret line="170" column="96" lean-forward="true" selection-start-line="170" selection-start-column="96" selection-end-line="170" selection-end-column="96" />
+            <state relative-caret-position="-304">
+              <caret line="69" column="70" lean-forward="false" selection-start-line="69" selection-start-column="56" selection-end-line="69" selection-end-column="70" />
               <folding>
                 <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
@@ -77,8 +77,8 @@
       <file leaf-file-name="allLendList.vue" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/page/allLendList.vue">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="178" column="17" lean-forward="true" selection-start-line="178" selection-start-column="17" selection-end-line="178" selection-end-column="17" />
+            <state relative-caret-position="189">
+              <caret line="36" column="57" lean-forward="false" selection-start-line="36" selection-start-column="51" selection-end-line="36" selection-end-column="57" />
               <folding>
                 <element signature="n#style#0;n#el-table#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
               </folding>
@@ -142,6 +142,8 @@
       <find>/100</find>
       <find>出借</find>
       <find>lendMoney</find>
+      <find>borrowerIdCard</find>
+      <find>idCard</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -167,8 +169,8 @@
         <option value="$PROJECT_DIR$/config/index.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/api/getData.js" />
-        <option value="$PROJECT_DIR$/src/page/myLendList.vue" />
         <option value="$PROJECT_DIR$/src/page/allLendList.vue" />
+        <option value="$PROJECT_DIR$/src/page/myLendList.vue" />
       </list>
     </option>
   </component>
@@ -290,18 +292,18 @@
       <workItem from="1537406069864" duration="2193000" />
       <workItem from="1537453403890" duration="34000" />
       <workItem from="1537592231244" duration="362000" />
-      <workItem from="1537608297475" duration="1378000" />
+      <workItem from="1537608297475" duration="1803000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22691000" />
+    <option name="totallyTimeSpent" value="23116000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15997182" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23608175" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.49093106" sideWeight="0.5024665" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -671,17 +673,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/page/myLendList.vue">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="502">
-          <caret line="170" column="96" lean-forward="true" selection-start-line="170" selection-start-column="96" selection-end-line="170" selection-end-column="96" />
-          <folding>
-            <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/page/myBorrowerList.vue">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -690,10 +681,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/page/myLendList.vue">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-304">
+          <caret line="69" column="70" lean-forward="false" selection-start-line="69" selection-start-column="56" selection-end-line="69" selection-end-column="70" />
+          <folding>
+            <element signature="n#style#0;n#el-table#0;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#template#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/page/allLendList.vue">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="178" column="17" lean-forward="true" selection-start-line="178" selection-start-column="17" selection-end-line="178" selection-end-column="17" />
+        <state relative-caret-position="189">
+          <caret line="36" column="57" lean-forward="false" selection-start-line="36" selection-start-column="51" selection-end-line="36" selection-end-column="57" />
           <folding>
             <element signature="n#style#0;n#el-table#0;n#el-dialog#0;n#div#0;n#template#0;n#!!top" expanded="true" />
           </folding>

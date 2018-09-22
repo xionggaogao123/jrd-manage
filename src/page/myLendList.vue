@@ -13,7 +13,7 @@
             <el-table :data="tableData" highlight-current-row style="width: 100%">
                 <el-table-column type="index" width="50"></el-table-column>
                 <el-table-column property="borrowerName" label="借款人姓名"></el-table-column>
-                <el-table-column property="borrowerIdCard" label="身份证号"></el-table-column>
+                <el-table-column property="borrowerIdCard" label="借款人身份证号"></el-table-column>
                 <el-table-column property="borrowerPhone" label="电话号码"></el-table-column>
                 <el-table-column property="projectName" label="借款合同号"></el-table-column>
                 <el-table-column property="projectNo" label="项目编号"></el-table-column>
@@ -170,7 +170,7 @@ export default {
                         this.tableData[i].lendMoney = this.tableData[i].lendMoney / 100;
                         this.tableData[i].interestMoney = this.tableData[i].interestMoney / 100;
                         this.tableData[i].lendDate = this.fmtDate(this.tableData[i].lendDate);
-                        this.tableData[i].expireDate = this.fmtDate(this.tableData[i].lendDate);
+                        this.tableData[i].expireDate = this.fmtDate(this.tableData[i].expireDate);
                     }
                 } else {
                     this.$message.error(res.data.message);

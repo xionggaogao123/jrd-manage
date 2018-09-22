@@ -130,7 +130,7 @@ export default {
                     for (let i = 0; i < this.tableData2.length; i++) {
                         this.tableData2[i].lendMoney = this.tableData2[i].lendMoney / 100;
                         this.tableData2[i].lendDate = this.fmtDate(this.tableData2[i].lendDate);
-                        this.tableData2[i].expireDate = this.fmtDate(this.tableData2[i].lendDate);
+                        this.tableData2[i].expireDate = this.fmtDate(this.tableData2[i].expireDate);
                     }
                 } else {
                     this.$message.error(res.data.message);
@@ -172,7 +172,7 @@ export default {
                     for (let i = 0; i < this.tableData2.length; i++) {
                         this.tableData2[i].lendMoney = this.tableData2[i].lendMoney / 100;
                         this.tableData2[i].lendDate = this.fmtDate(this.tableData2[i].lendDate);
-                        this.tableData2[i].expireDate = this.fmtDate(this.tableData2[i].lendDate);
+                        this.tableData2[i].expireDate = this.fmtDate(this.tableData2[i].expireDate);
                     }
                 } else {
                     this.$message.error(res.data.message);
