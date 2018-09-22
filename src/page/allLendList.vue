@@ -3,12 +3,6 @@
         <head-top></head-top>
         <div class="searchBox">
             <el-input v-model="lenderName" placeholder="出借人姓名" size="small"></el-input>
-            <el-input v-model="lenderPhone" placeholder="出借人号码" size="small"></el-input>
-            <el-input v-model="projectNo" placeholder="项目编号" size="small"></el-input>
-            <el-input v-model="projectName" placeholder="项目名称" size="small"></el-input>
-            <el-input v-model="borrowerPhone" placeholder="借款人手机号" size="small"></el-input>
-            <el-input v-model="borrowerName" placeholder="借款人姓名" size="small"></el-input>
-            <el-input v-model="borrowerIdCard" placeholder="身份证号码" size="small"></el-input>
             <el-button type="primary" size="small" @click="search">搜索</el-button>
         </div>
 
@@ -16,7 +10,8 @@
 
         <div class="table_container">
 
-            <div class="allMoney"><span>尚未收回本息：{{allMoney/100}} 元</span><span>本金：{{principal/100}} 元</span><span>利息：{{interest/100}} 元</span></div>
+            <div class="allMoney"><span>全平台尚未收回本息：{{allMoney/100}} 元</span><span>&nbsp &nbsp &nbsp</span>
+                <span>本金：{{principal/100}} 元</span> <span>&nbsp &nbsp &nbsp</span><span>利息：{{interest/100}} 元</span></div>
 
             <el-table :data="tableData1" highlight-current-row style="width: 100%">
                 <el-table-column property="name" label="出借人"></el-table-column>
@@ -58,7 +53,7 @@
 </template>
 <script>
 import headTop from '../components/headTop'
-import { lenderListAllUserInfo, lendRecordPagingMyLend } from '@/api/getData'
+import { lenderListAllUserInfo, lendRecordPagingMyLend, countUserMoneyDate } from '@/api/getData'
 
 export default {
     data() {
@@ -99,6 +94,15 @@ export default {
                         this.tableData1[i].totalLendMoney = this.tableData1[i].totalLendMoney / 100;
                         this.tableData1[i].totalInterestMoney = this.tableData1[i].totalInterestMoney / 100;
                     }
+                } else {
+                    this.$message.error(res.data.message);
+                }
+            });
+            countUserMoneyDate().then((res) => {
+                if (res.data.result) {
+                    this.allMoney = res.data.result.totalWaitMoney;
+                    this.principal = res.data.result.totalLendMoney;
+                    this.interest = res.data.result.totalInterestMoney;
                 } else {
                     this.$message.error(res.data.message);
                 }
@@ -154,7 +158,7 @@ export default {
                 borrowerPhone: this.borrowerPhone,
                 borrowerName: this.borrowerName,
                 borrowerIdCard: this.borrowerIdCard
-            }
+            };
             lenderListAllUserInfo({ params: params }).then((res) => {
                 if (res.data.result) {
                     this.tableData1 = res.data.result.data;
@@ -169,6 +173,7 @@ export default {
                 }
             });
         },
+
         checkRecord(index, row) {
             this.dialogFormVisible = true;
             this.lenderId = row.id;

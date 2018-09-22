@@ -87,6 +87,10 @@ export const lenderUserInfo =(params) => {
     return axios.get(`${host}/lender/user-info`, params);
 };
 
+export const countUserMoneyDate =(params) => {
+    return axios.get(`${host}/lender/count-all-data`, params);
+};
+
 /**
  * 获取当前 登录用户的 信息
  */
