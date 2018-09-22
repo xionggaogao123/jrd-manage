@@ -168,6 +168,7 @@ export default {
                     this.totalCount = res.data.result.total;
                     for (let i = 0; i < this.tableData.length; i++) {
                         this.tableData[i].lendMoney = this.tableData[i].lendMoney / 100;
+                        this.tableData[i].interestMoney = this.tableData[i].interestMoney / 100;
                         this.tableData[i].lendDate = this.fmtDate(this.tableData[i].lendDate);
                         this.tableData[i].expireDate = this.fmtDate(this.tableData[i].lendDate);
                     }
@@ -360,6 +361,7 @@ export default {
             this.dialogFormVisible1 = true;
             this.isEditor = true;
             this.registrationForm = row;
+
         },
         openRegistration() {
             this.dialogFormVisible1 = true;
