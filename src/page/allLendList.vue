@@ -21,7 +21,7 @@
                 <el-table-column property="totalInterestMoney" label="应收利息(元)"></el-table-column>
                 <el-table-column property="" label="操作">
                     <template slot-scope="scope">
-                        <el-button type="text" @click="checkRecord(scope.$index,scope.row)">出借記錄</el-button>
+                        <el-button type="text" @click="checkRecord(scope.$index,scope.row)">出借记录</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -30,7 +30,7 @@
                 </el-pagination>
             </div>
         </div>
-        <el-dialog title="出借記錄" :visible.sync="dialogFormVisible" custom-class="dialogFormVisible3" @close="closeDialog">
+        <el-dialog title="出借记录" :visible.sync="dialogFormVisible" custom-class="dialogFormVisible3" @close="closeDialog">
             <el-table :data="tableData2" highlight-current-row style="width: 100%">
                 <el-table-column type="index" width="50"></el-table-column>
                 <el-table-column property="borrowerName" label="借款人姓名"></el-table-column>
@@ -128,7 +128,7 @@ export default {
                     this.tableData2 = res.data.result.data;
                     this.totalCount2 = res.data.result.total;
                     for (let i = 0; i < this.tableData2.length; i++) {
-                        this.tableData2[i].lendMoney = this.tableData2[i].projectNo / 100;
+                        this.tableData2[i].lendMoney = this.tableData2[i].lendMoney / 100;
                         this.tableData2[i].lendDate = this.fmtDate(this.tableData2[i].lendDate);
                         this.tableData2[i].expireDate = this.fmtDate(this.tableData2[i].lendDate);
                     }
@@ -170,7 +170,7 @@ export default {
                     this.tableData2 = res.data.result.data;
                     this.totalCount2 = res.data.result.total;
                     for (let i = 0; i < this.tableData2.length; i++) {
-                        this.tableData2[i].lendMoney = this.tableData2[i].projectNo / 100;
+                        this.tableData2[i].lendMoney = this.tableData2[i].lendMoney / 100;
                         this.tableData2[i].lendDate = this.fmtDate(this.tableData2[i].lendDate);
                         this.tableData2[i].expireDate = this.fmtDate(this.tableData2[i].lendDate);
                     }
