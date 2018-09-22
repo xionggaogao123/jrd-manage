@@ -11,14 +11,20 @@
             <el-input v-model="borrowerIdCard" placeholder="身份证号码" size="small"></el-input>
             <el-button type="primary" size="small" @click="search">搜索</el-button>
         </div>
+
+
+
         <div class="table_container">
+
+            <div class="allMoney"><span>尚未收回本息：{{allMoney/100}} 元</span><span>本金：{{principal/100}} 元</span><span>利息：{{interest/100}} 元</span></div>
+
             <el-table :data="tableData1" highlight-current-row style="width: 100%">
                 <el-table-column property="name" label="出借人"></el-table-column>
                 <el-table-column property="phone" label="出借人电话"></el-table-column>
-                <el-table-column property="idCard" label="出借人身份证号"></el-table-column>
+                <el-table-column property="idCard" label="出借人身份证号" size="160px"></el-table-column>
                 <el-table-column property="totalWaitMoney" label="尚未收回本息(元)"></el-table-column>
-                <el-table-column property="totalLendMoney" label="出借本金(元)"></el-table-column>
-                <el-table-column property="totalInterestMoney" label="应收利息(元)"></el-table-column>
+                <el-table-column property="totalLendMoney" label="尚未收回本金(元)"></el-table-column>
+                <el-table-column property="totalInterestMoney" label="尚未收回利息(元)"></el-table-column>
                 <el-table-column property="" label="操作">
                     <template slot-scope="scope">
                         <el-button type="text" @click="checkRecord(scope.$index,scope.row)">出借记录</el-button>
@@ -36,7 +42,7 @@
                 <el-table-column property="borrowerName" label="借款人姓名"></el-table-column>
                 <el-table-column property="borrowerIdCard" label="身份证号"></el-table-column>
                 <el-table-column property="borrowerPhone" label="电话号码"></el-table-column>
-                <el-table-column property="projectName" label="借款合同号"></el-table-column>
+                <el-table-column property="contractNo" label="借款合同号"></el-table-column>
                 <el-table-column property="lendMoney" label="借款金额(元)"></el-table-column>
                 <el-table-column property="guaranteeCompany" label="担保公司"></el-table-column>
                 <el-table-column property="lendDate" label="借款日期"></el-table-column>
@@ -67,6 +73,7 @@ export default {
             lenderName: "",
             lenderPhone: "",
             projectNo: "",
+            contractNo: "",
             projectName: "",
             borrowerPhone: "",
             borrowerName: "",

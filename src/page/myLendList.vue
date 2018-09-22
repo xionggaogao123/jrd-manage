@@ -27,7 +27,7 @@
                     <template slot-scope="scope">
                         <el-button v-if="scope.row.isRecord" type="text" @click="editorEvidence(scope.$index,scope.row)">编辑还款证据</el-button>
                         <el-button v-else type="text" @click="entryEvidence(scope.$index,scope.row)">录入还款证据</el-button>
-                        <el-button type="text" @click="editorList(scope.$index,scope.row)">编辑</el-button>
+                      <!--  <el-button type="text" @click="editorList(scope.$index,scope.row)">编辑</el-button>-->
                         <el-button type="text" @click="deleteList(scope.$index,scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -108,8 +108,12 @@
     </div>
 </template>
 <script>
+
 import headTop from '../components/headTop'
-import { lendRecordPagingMyLend, lendRecordCreate, toolUploadImage, borrowerRecordEvidence, companyList, lenderUserInfo, lendRecordDeleteMyLend, lendRecordUpdateMyLend, borrowerFindEvidence, borrowerUpdateEvidence } from '@/api/getData'
+import { lendRecordPagingMyLend, lendRecordCreate,
+    toolUploadImage, borrowerRecordEvidence, companyList,
+    lenderUserInfo, lendRecordDeleteMyLend, lendRecordUpdateMyLend,
+    borrowerFindEvidence, borrowerUpdateEvidence } from '@/api/getData'
 
 export default {
     data() {
