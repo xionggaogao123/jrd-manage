@@ -6,8 +6,6 @@
             <el-button type="primary" size="small" @click="search">搜索</el-button>
         </div>
 
-
-
         <div class="table_container">
 
             <div class="allMoney"><span>全平台尚未收回本息：{{allMoney/100}} 元</span><span>&nbsp &nbsp &nbsp</span>
