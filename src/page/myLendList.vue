@@ -15,9 +15,9 @@
                 <el-table-column property="borrowerName" label="借款人姓名"></el-table-column>
                 <el-table-column property="borrowerIdCard" label="借款人身份证号"></el-table-column>
                 <el-table-column property="borrowerPhone" label="电话号码"></el-table-column>
-                <el-table-column property="contractNo" label="借款合同号"></el-table-column>
-                <el-table-column property="projectNo" label="项目编号"></el-table-column>
                 <el-table-column property="projectName" label="项目名称"></el-table-column>
+                <el-table-column property="projectNo" label="项目编号"></el-table-column>
+                <el-table-column property="contractNo" label="借款合同号"></el-table-column>
                 <el-table-column property="lendMoney" label="借款金额(元)"></el-table-column>
                 <el-table-column property="guaranteeCompany" label="担保公司"></el-table-column>
                 <el-table-column property="lendDate" label="借款日期"></el-table-column>
