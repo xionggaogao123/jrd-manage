@@ -8,7 +8,7 @@
 
         <div class="table_container">
 
-            <div class="allMoney"><span>全平台尚未收回本息：{{allMoney/100}} 元</span><span>&nbsp &nbsp &nbsp</span>
+            <div class="allUserMoney"><span>全平台尚未收回本息：{{allMoney/100}} 元</span><span>&nbsp &nbsp &nbsp</span>
                 <span>本金：{{principal/100}} 元</span> <span>&nbsp &nbsp &nbsp</span><span>利息：{{interest/100}} 元</span></div>
 
             <el-table :data="tableData1" highlight-current-row style="width: 100%">
@@ -72,7 +72,10 @@ export default {
             borrowerName: "",
             borrowerIdCard: "",
             dialogFormVisible: false,
-            lenderId: ""
+            lenderId: "",
+            allMoney: "",
+            principal: "",
+            interest: "",
         }
     },
     components: {
@@ -180,7 +183,7 @@ export default {
                     this.tableData2 = res.data.result.data;
                     this.totalCount2 = res.data.result.total;
                     for (let i = 0; i < this.tableData2.length; i++) {
-                        this.tableData2[i].lendMoney = this.tableData2[i].lendMoney / 100;
+                        this.tableData2[i].lendMoney = this.tableData2[i].lendMoney / 1;
                         this.tableData2[i].lendDate = this.fmtDate(this.tableData2[i].lendDate);
                         this.tableData2[i].expireDate = this.fmtDate(this.tableData2[i].expireDate);
                     }
@@ -217,6 +220,14 @@ export default {
 .searchBox .el-input,
 .searchBox .el-select {
     width: 150px;
+}
+
+.allUserMoney {
+    margin-bottom: 10px;
+}
+
+.allUserMoney span {
+    margin-right: 20px;
 }
 
 .fillcontain .dialogFormVisible3 {

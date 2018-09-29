@@ -3,7 +3,7 @@
         <transition name="form-fade" mode="in-out">
             <section class="form_contianer" v-show="showLogin">
                 <div class="manage_tip">
-                    <p>jrd 债委会</p>
+                    <p>君融贷全国难友联盟</p>
                 </div>
                 <el-form :model="loginForm" :rules="loginRules" ref="loginForm" v-if="loginOrRegister">
                     <el-form-item prop="name">
@@ -27,9 +27,9 @@
                     <el-form-item prop="password">
                         <el-input placeholder="手机号" v-model="registerForm.phone"></el-input>
                     </el-form-item>
-                    <el-form-item prop="password">
+                   <!-- <el-form-item prop="password">
                         <el-input placeholder="身份证号码" v-model="registerForm.idcard"></el-input>
-                    </el-form-item>
+                    </el-form-item>-->
                     <el-form-item>
                         <el-button type="primary" @click="register('registerForm')" class="submit_btn">注册</el-button>
                     </el-form-item>
@@ -75,10 +75,10 @@ export default {
                 ],
                 phone: [
                     { required: true, message: '请输入手机号', trigger: 'blur' },
-                ],
+                ]/*,
                 idcard: [
                     { required: true, message: '请输入身份证号码', trigger: 'blur' }
-                ],
+                ],*/
             },
             showLogin: false,
             loginOrRegister: true,

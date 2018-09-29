@@ -15,7 +15,7 @@
                 <el-table-column property="borrowerName" label="借款人姓名"></el-table-column>
                 <el-table-column property="borrowerIdCard" label="借款人身份证号"></el-table-column>
                 <el-table-column property="borrowerPhone" label="电话号码"></el-table-column>
-                <el-table-column property="projectName" label="借款合同号"></el-table-column>
+                <el-table-column property="contractNo" label="借款合同号"></el-table-column>
                 <el-table-column property="projectNo" label="项目编号"></el-table-column>
                 <el-table-column property="projectName" label="项目名称"></el-table-column>
                 <el-table-column property="lendMoney" label="借款金额(元)"></el-table-column>
@@ -27,7 +27,7 @@
                     <template slot-scope="scope">
                         <el-button v-if="scope.row.isRecord" type="text" @click="editorEvidence(scope.$index,scope.row)">编辑还款证据</el-button>
                         <el-button v-else type="text" @click="entryEvidence(scope.$index,scope.row)">录入还款证据</el-button>
-                      <!--  <el-button type="text" @click="editorList(scope.$index,scope.row)">编辑</el-button>-->
+                        <el-button type="text" @click="editorList(scope.$index,scope.row)">编辑</el-button>
                         <el-button type="text" @click="deleteList(scope.$index,scope.row)">删除</el-button>
                     </template>
                 </el-table-column>
@@ -48,16 +48,16 @@
                 <el-form-item label="合同编号" :label-width="formLabelWidth">
                     <el-input v-model="registrationForm.contractNo" size="small"></el-input>
                 </el-form-item>
-                <el-form-item label="出借本金" :label-width="formLabelWidth">
-                    <el-input v-model="registrationForm.lendMoney" size="small"></el-input>
+                <el-form-item label="出借本金(元\填数字)" :label-width="formLabelWidth">
+                    <el-input v-model="registrationForm.lendMoney2" size="small"></el-input>
                 </el-form-item>
-                <el-form-item label="应收利息" :label-width="formLabelWidth">
-                    <el-input v-model="registrationForm.interestMoney" size="small"></el-input>
+                <el-form-item label="待收利息(元\填数字)" :label-width="formLabelWidth">
+                    <el-input v-model="registrationForm.interestMoney2" size="small"></el-input>
                 </el-form-item>
                 <el-form-item label="出借时间" :label-width="formLabelWidth">
                     <el-date-picker v-model="registrationForm.lendDate" type="date" placeholder="选择日期"></el-date-picker>
                 </el-form-item>
-                <el-form-item label="出借期限" :label-width="formLabelWidth">
+                <el-form-item label="出借期限(天\填数字)" :label-width="formLabelWidth">
                     <el-input v-model="registrationForm.lendDay" size="small"></el-input>
                 </el-form-item>
                 <el-form-item label="借款人姓名" :label-width="formLabelWidth">
@@ -127,19 +127,24 @@ export default {
             dialogFormVisible1: false,
             dialogFormVisible2: false,
             formLabelWidth: "90px",
+
             registrationForm: {
                 projectName: "",
                 projectNo: "",
                 contractNo: "",
                 lendMoney: "",
+                lendMoney2: "",
+                interestMoney: "",
+                interestMoney2: "",
                 lendDate: "",
                 lendDay: "",
                 borrowerName: "",
                 borrowerPhone: "",
                 borrowerIdCard: "",
-                guaranteeCompany: "",
-                interestMoney: ""
+                guaranteeCompany: ""
+
             },
+
             evidenceForm: {
                 lendRecordId: "",
                 bankName: "",
@@ -148,6 +153,7 @@ export default {
                 remark: "",
                 evidences: []
             },
+
             borrowerId: "",
             fileList: [],
             companyList: [],
@@ -171,6 +177,9 @@ export default {
                     this.tableData = res.data.result.data;
                     this.totalCount = res.data.result.total;
                     for (let i = 0; i < this.tableData.length; i++) {
+                        this.tableData[i].lendMoney2 = this.tableData[i].lendMoney / 100;
+                        this.tableData[i].interestMoney2 = this.tableData[i].interestMoney / 100;
+
                         this.tableData[i].lendMoney = this.tableData[i].lendMoney / 100;
                         this.tableData[i].interestMoney = this.tableData[i].interestMoney / 100;
                         this.tableData[i].lendDate = this.fmtDate(this.tableData[i].lendDate);
@@ -233,8 +242,8 @@ export default {
         },
         registration() {
             if (this.isEditor) { //编辑
-                this.registrationForm.lendMoney = this.registrationForm.lendMoney * 100;
-                this.registrationForm.interestMoney = this.registrationForm.interestMoney * 100;
+                this.registrationForm.lendMoney = this.registrationForm.lendMoney2 * 100;
+                this.registrationForm.interestMoney = this.registrationForm.interestMoney2 * 100;
                 lendRecordUpdateMyLend(this.registrationForm).then((res) => {
                     if (res.data.result) {
                         this.$message.success(res.data.message);
@@ -246,8 +255,8 @@ export default {
                     }
                 });
             } else { //新增
-                this.registrationForm.lendMoney = this.registrationForm.lendMoney * 100;
-                this.registrationForm.interestMoney = this.registrationForm.interestMoney * 100;
+                this.registrationForm.lendMoney = this.registrationForm.lendMoney2 * 100;
+                this.registrationForm.interestMoney = this.registrationForm.interestMoney2 * 100;
                 lendRecordCreate(this.registrationForm).then((res) => {
                     if (res.data.result) {
                         this.$message.success(res.data.message);

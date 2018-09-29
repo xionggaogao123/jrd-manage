@@ -6,9 +6,9 @@ axios.defaults.withCredentials=true;
 //let host = 'http://192.168.19.94:9001';
 
 
-//let host = "http://65.49.220.34:9001";
+let host = "http://65.49.220.34:9001";
 
-let host = "http://localhost:9001";
+//let host = "http://localhost:9002";
 
 /**
  * 登陆
@@ -23,6 +23,7 @@ export const adminLogin =(params) => {
 export const adminRegister =(params) => {
     return axios.post(`${host}/lender/register`, params);
 };
+
 
 /**
  * 退出登录
